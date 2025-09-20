@@ -1,0 +1,1 @@
+关于spring-boot-admin 3.5.5版本集成示例

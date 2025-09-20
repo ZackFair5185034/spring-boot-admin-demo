@@ -1,0 +1,27 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: client-app
+  profiles:
+    active: dev
+
+
+
+
+
+  boot:
+    admin:
+      client:
+        url: http://localhost:9000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true

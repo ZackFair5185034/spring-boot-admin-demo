@@ -1,0 +1,13 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: spring-admin-app
+  security:
+    user:
+      name: admin
+      password: admin123
+
+  profiles:
+    active: dev
