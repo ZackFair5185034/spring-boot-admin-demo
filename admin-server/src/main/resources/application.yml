@@ -4,10 +4,36 @@ server:
 spring:
   application:
     name: spring-admin-app
+  profiles:
+    active: dev
+  boot:
+    #是否监控本身(可选)
+    admin:
+      client:
+        url: http://localhost:9000
+        username: admin
+        password: admin123
+        instance:
+          metadata:
+            user.name: admin
+            user.password: admin123
+        auto-registration: true
+        auto-deregistration: true
+        period: 10s
+        connect-timeout: 2s
+        read-timeout: 5s
+
   security:
     user:
       name: admin
       password: admin123
 
-  profiles:
-    active: dev
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
