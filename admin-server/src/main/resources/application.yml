@@ -4,10 +4,27 @@ server:
 spring:
   application:
     name: spring-admin-app
+  profiles:
+    active: dev
+
+#微服务发现
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.101.188:8848
+        namespace: public
+        group: DEFAULT_GROUP
+  boot:
+    # 监控管理
+    admin:
+      discovery:
+        enabled: true
+      ui:
+        title: '应用监控管理'
+   # 安全验证
   security:
     user:
       name: admin
       password: admin123
 
-  profiles:
-    active: dev
+
