@@ -1,27 +1,47 @@
 server:
   port: 8000
+
 spring:
   application:
     name: client-app
   profiles:
     active: dev
-
-
-
-
-
+  security:
+    user:
+      name: clientUser
+      password: 123456
   boot:
     admin:
       client:
         url: http://localhost:9000
+        username: admin
+        password: admin123
+        instance:
+          metadata:
+            user.name: clientUser
+            user.password: 123456
+        auto-registration: true
+        auto-deregistration: true
+        period: 10s
+        connect-timeout: 2s
+        read-timeout: 5s
+
 management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: health, info, metrics, loggers, env, beans
   endpoint:
     health:
       show-details: always
+      show-components: always
+    info:
+      access: read_only
   info:
     env:
+      enabled: true
+  health:
+    defaults:
+      enabled: true
+    diskspace:
       enabled: true
