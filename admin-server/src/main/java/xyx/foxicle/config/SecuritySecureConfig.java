@@ -41,17 +41,18 @@ public class SecuritySecureConfig {
         successHandler.setTargetUrlParameter("redirectTo");
         successHandler.setDefaultTargetUrl(this.adminServer.path("/"));
 
-        // 使用现代的方式配置授权规则
         http.authorizeHttpRequests(authorize -> authorize
-                        // 静态资源允许访问
-                        .requestMatchers(String.valueOf(PathRequest.toStaticResources().atCommonLocations())).permitAll()
-                        // Admin Server 特定路径 - 使用字符串路径模式
+                        // 放行所有静态资源
                         .requestMatchers(
+                                adminServer.path("/assets/**"),
                                 adminServer.path("/login"),
                                 adminServer.path("/actuator/info"),
-                                adminServer.path("/actuator/health")
+                                adminServer.path("/actuator/health"),
+                                "/css/**",
+                                "/js/**",
+                                "/webjars/**",
+                                "/favicon.ico"
                         ).permitAll()
-                        // 任何其他请求需要认证
                         .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
@@ -60,8 +61,7 @@ public class SecuritySecureConfig {
                 )
                 .logout(logout -> logout
                         .logoutUrl(adminServer.path("/logout"))
-                )
-                .httpBasic(Customizer.withDefaults()); // 允许 Client 注册
+                ).httpBasic(Customizer.withDefaults());
 
         // 配置 CSRF
         http.csrf(csrf -> csrf
